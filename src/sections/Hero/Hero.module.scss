@@ -1,0 +1,47 @@
+@import "../../styles/vars.scss";
+
+.heroWrap {
+  padding-top: 96px;
+  padding-bottom: 120px;
+  min-height: calc(100vh - 74px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topLabel {
+  color: $muted;
+  margin-top: 6px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.centerArea {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circleDecor {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+  margin-bottom: 18px;
+  background: linear-gradient(180deg,#fff,#f9f9f9);
+}
+
+.title {
+  font-size: 36px;
+  margin: 8px 0 20px 0;
+  letter-spacing: 0.6px;
+  font-weight: 500;
+}
+
+/* responsive */
+@media (max-width: 720px) {
+  .title { font-size: 26px; }
+  .circleDecor { width: 54px; height: 54px; }
+}

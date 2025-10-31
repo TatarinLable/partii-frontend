@@ -1,78 +1,71 @@
-import React, { useEffect, useMemo, useRef } from 'react'
-import './Header.scss'
-import logo from '../../assets/logo.svg' // place logo.svg in src/assets
-
-import type { SectionId } from '../../App'
+import React, { useEffect, useState } from "react";
+import styles from "./Header.module.scss";
+import logo from "../../assets/logo.svg";
 
 interface Props {
-  active: SectionId
-  onNavigate: (id: SectionId) => void
+  active: "home" | "about" | "projects" | "contacts";
+  onNav: (id: "home" | "about" | "projects" | "contacts") => void;
 }
 
-const NAV: { id: SectionId; label: string }[] = [
-  { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About' },
-  { id: 'projects', label: 'Project' },
-  { id: 'contacts', label: 'Contacts' },
-]
+const sectionNames: Record<Props["active"], string> = {
+  home: "Главная страница",
+  about: "Обо мне",
+  projects: "Проекты",
+  contacts: "Контакты",
+};
 
-const Header: React.FC<Props> = ({ active, onNavigate }) => {
-  const ulRef = useRef<HTMLUListElement | null>(null)
-  const indRef = useRef<HTMLDivElement | null>(null)
-  const idx = useMemo(() => NAV.findIndex(n => n.id === active), [active])
+const Header: React.FC<Props> = ({ active, onNav }) => {
+  const [fadeKey, setFadeKey] = useState(active);
+  const [showSubtitle, setShowSubtitle] = useState(false);
 
   useEffect(() => {
-    const ul = ulRef.current
-    const ind = indRef.current
-    if (!ul || !ind) return
-    const li = ul.children[idx] as HTMLElement | undefined
-    if (!li) {
-      ind.style.opacity = '0'
-      return
-    }
-    const rect = li.getBoundingClientRect()
-    const parentRect = ul.getBoundingClientRect()
-    const left = rect.left - parentRect.left
-    ind.style.width = `${rect.width}px`
-    ind.style.transform = `translateX(${left}px)`
-    ind.style.opacity = '1'
-  }, [idx])
+    setFadeKey(active);
+    setShowSubtitle(false);
+    const timer = setTimeout(() => setShowSubtitle(true), 200);
+    return () => clearTimeout(timer);
+  }, [active]);
 
   return (
-    <header className="site-header">
-      <div className="header-inner">
-        <div className="left">
-          <button className="logo-btn" onClick={() => onNavigate('home')}>
-            <img src={logo} alt="logo" />
-          </button>
-          <div className="menu-compact">
-            <span className="menu-label">menu</span>
-            <div className="menu-lines" aria-hidden />
-          </div>
-        </div>
-
-        <nav className="center">
-          <ul ref={ulRef} className="nav-list">
-            {NAV.map((n) => (
-              <li key={n.id}>
-                <button
-                  className={`nav-btn ${n.id === active ? 'is-active' : ''}`}
-                  onClick={() => onNavigate(n.id)}
-                >
-                  {n.label}
-                </button>
-              </li>
-            ))}
-            <div className="nav-indicator" ref={indRef} />
-          </ul>
-        </nav>
-
-        <div className="right">
-          <button className="auth">Log in</button>
+    <header className={styles.header}>
+      <div className={styles.left}>
+        <img src={logo} alt="logo" className={styles.logo} />
+        <div className={styles.menu}>
+          <div className={styles.menuText}>menu</div>
+          <div className={styles.bars}>≡</div>
         </div>
       </div>
-    </header>
-  )
-}
 
-export default Header
+      <div className={styles.center}>
+       <button
+  className={`${styles.pill} ${active ? styles.active : ""}`}
+  onClick={() => onNav(active)}
+>
+  <span key={fadeKey}>
+    {active === "home"
+      ? "Home"
+      : active === "about"
+      ? "About"
+      : active === "projects"
+      ? "Portfolio"
+      : "Contacts"}
+  </span>
+</button>
+
+        <div
+          key={fadeKey + "-desc"}
+          className={`${styles.subText} ${showSubtitle ? styles.visible : ""}`}
+        >
+          {sectionNames[active]}
+        </div>
+      </div>
+
+      <div className={styles.right}>
+        <button className={styles.login} onClick={() => onNav("contacts")}>
+          Log in
+        </button>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

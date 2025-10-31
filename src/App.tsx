@@ -1,86 +1,69 @@
-import React, { useRef, useState, useEffect } from 'react'
-import Header from './components/Header/Header'
-import Chat from './components/Chat/Chat'
-import Hero from './sections/Hero/Hero'
-import About from './sections/About/About'
-import Projects from './sections/Projects/Projects'
-import Contacts from './sections/Contacts/Contacts'
-import './styles/global.scss'
-
-export type SectionId = 'home' | 'about' | 'projects' | 'contacts'
+import React, { useEffect, useRef, useState } from "react";
+import Header from "./components/Header/Header";
+import Hero from "./sections/Hero/Hero";
+import About from "./sections/About/About";
+import Projects from "./sections/Projects/Projects";
+import Contacts from "./sections/Contacts/Contacts";
 
 const App: React.FC = () => {
-  const homeRef = useRef<HTMLElement | null>(null)
-  const aboutRef = useRef<HTMLElement | null>(null)
-  const projectsRef = useRef<HTMLElement | null>(null)
-  const contactsRef = useRef<HTMLElement | null>(null)
+  const [active, setActive] = useState<"home" | "about" | "projects" | "contacts">("home");
 
-  const [active, setActive] = useState<SectionId>('home')
+  const refs = {
+    home: useRef<HTMLElement | null>(null),
+    about: useRef<HTMLElement | null>(null),
+    projects: useRef<HTMLElement | null>(null),
+    contacts: useRef<HTMLElement | null>(null),
+  };
 
-const sections: Record<string, React.RefObject<HTMLElement | null>> = {
-  home: homeRef,
-  about: aboutRef,
-  projects: projectsRef,
-  contacts: contactsRef,
-};
+  const scrollTo = (id: keyof typeof refs) => {
+    refs[id].current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   useEffect(() => {
-    const opts = { root: null, threshold: 0.38 }
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          const id = e.target.getAttribute('data-section') as SectionId | null
-          if (id) setActive(id)
-        }
-      })
-    }, opts)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((e) => e.isIntersecting);
+        if (visible) setActive(visible.target.getAttribute("data-section") as any);
+      },
+      { threshold: 0.5 }
+    );
 
-    Object.values(sections).forEach(r => {
-      if (r.current) obs.observe(r.current)
-    })
+    Object.values(refs).forEach((r) => {
+      if (r.current) observer.observe(r.current);
+    });
 
-    return () => obs.disconnect()
-  }, [])
-
-  const scrollTo = (id: SectionId) => {
-    const ref = sections[id]
-    if (!ref.current) return
-    ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    setActive(id)
-  }
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="app-root">
-      <Header active={active} onNavigate={scrollTo} />
-
-      <main className="main-content">
-        <section ref={homeRef} data-section="home" id="home">
-          <Hero />
+    <>
+      <Header active={active} onNav={scrollTo} />
+      <main>
+        <section data-section="home" ref={refs.home}>
+          <Hero
+            onCommand={(txt) => {
+              const lower = txt.toLowerCase();
+              if (lower.includes("портф")) scrollTo("projects");
+              if (lower.includes("контакт") || lower.includes("заяв")) scrollTo("contacts");
+              if (lower.includes("обо")) scrollTo("about");
+            }}
+          />
         </section>
 
-        <section ref={aboutRef} data-section="about" id="about">
+        <section data-section="about" ref={refs.about}>
           <About />
         </section>
 
-        <section ref={projectsRef} data-section="projects" id="projects">
+        <section data-section="projects" ref={refs.projects}>
           <Projects />
         </section>
 
-        <section ref={contactsRef} data-section="contacts" id="contacts">
+        <section data-section="contacts" ref={refs.contacts}>
           <Contacts />
         </section>
       </main>
+    </>
+  );
+};
 
-      <Chat
-        onNavigate={(id) => scrollTo(id)}
-        onCreateRequest={(data) => {
-          // scroll to contacts and prefill via custom event
-          scrollTo('contacts')
-          window.dispatchEvent(new CustomEvent('prefillRequest', { detail: data }))
-        }}
-      />
-    </div>
-  )
-}
-
-export default App
+export default App;
