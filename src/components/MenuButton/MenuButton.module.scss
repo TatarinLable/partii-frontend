@@ -1,0 +1,35 @@
+@import "../../styles/vars.scss";
+.menuButton {
+  width: 30px;
+  height: 26px;
+  border: 1.5px solid rgba(0, 0, 0, 0.8);
+  border-radius: 6px;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+  padding: 0;
+
+  &:hover {
+    border-color: #000;
+    transform: scale(1.05);
+  }
+}
+
+.line {
+  width: 1.5px;
+  height: 60%;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 1px;
+  transition: transform 0.45s cubic-bezier(0.25, 1.5, 0.5, 1), opacity 0.3s ease;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* ⚡ При активации — плавно едет влево и “пружинит” */
+.active .line {
+  transform: translateX(-8px) scaleX(0.8);
+  opacity: 0.9;
+}

@@ -1,3 +1,250 @@
 @import "../../styles/vars.scss";
 
-.wrap { padding: 80px 20px; max-width: 900px; margin: 0 auto; text-align:center; }
+.contacts {
+  width: 100%;
+  min-height: 100vh;
+  padding: 120px 0 60px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Заголовок секции */
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.pill {
+  width: 220px;
+  height: 46px;
+  border-radius: 18px;
+  border: 1.6px solid rgba(0, 0, 0, 0.15);
+  background: #fff;
+  font-weight: 600;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subtitle {
+  margin-top: 14px;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Карточка */
+.card {
+  position: relative;
+  width: 680px;
+  max-width: 90%;
+  min-height: 360px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 32px;
+  padding: 60px 40px;
+  text-align: center;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+  animation: fadeIn 0.8s ease;
+}
+
+.centerContent {
+  position: relative;
+  z-index: 2;
+}
+
+.iconMain {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 18px;
+  opacity: 0.9;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.text {
+  max-width: 440px;
+  margin: 0 auto 32px;
+  color: #333;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 12px;
+  background: #f5f5f5;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  background: #ebebeb;
+  transform: translateY(-1px);
+}
+
+/* ✈️ Летающие самолётики */
+.icon {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  opacity: 0.6;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
+  z-index: 1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.topLeft {
+  top: 20px;
+  left: 26px;
+  animation-delay: 0s;
+}
+
+.topRight {
+  top: 24px;
+  right: 26px;
+  animation-delay: 1.4s;
+}
+
+.bottomLeft {
+  bottom: 24px;
+  left: 26px;
+  animation-delay: 2.8s;
+}
+
+.bottomRight {
+  bottom: 28px;
+  right: 28px;
+  animation-delay: 4.2s;
+}
+
+/* Анимации */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-6px) rotate(4deg);
+    opacity: 0.85;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin-top: 70px;
+  font-size: 16px;
+  color: #000;
+}
+
+/* --- плавное переключение контента --- */
+.centerContent,
+.form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hideContent {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.showContent {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hideForm {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.showForm {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- форма (изолирована!) --- */
+.form {
+  z-index: 3;
+
+  input,
+  textarea {
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+    resize: none;
+    outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
+  }
+
+  textarea {
+    min-height: 100px;
+  }
+
+  .formButtons {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+
+    button {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+
+    .sendBtn {
+      background: #000;
+      color: #fff;
+
+      &:hover {
+        background: #333;
+      }
+    }
+  }
+}

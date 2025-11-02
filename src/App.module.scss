@@ -1,0 +1,13 @@
+.appWrapper {
+  position: relative;
+  transition: transform 0.4s ease;
+}
+
+.shifted {
+  transform: translateX(240px);
+}
+
+.blur {
+  filter: blur(4px);
+  pointer-events: none;
+}

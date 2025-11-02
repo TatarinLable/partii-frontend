@@ -78,3 +78,18 @@ input {
 
 .hintText b { margin-right:6px; color: #111; }
 .hintText span { color: $muted; }
+
+.chat {
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  overflow: hidden;
+
+  &.collapsed {
+    max-height: 20000px; // только нижняя часть
+    padding-top: 10px;
+
+    .window {
+      max-height: 600000px; // только последнее сообщение видно
+      overflow: hidden;
+    }
+  }
+}

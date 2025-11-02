@@ -13,3 +13,14 @@ body {
 
 main { margin-top: 74px; } /* header height */
 button { font-family: inherit; }
+
+/* Убираем визуальный скроллбар, но сохраняем прокрутку */
+html, body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

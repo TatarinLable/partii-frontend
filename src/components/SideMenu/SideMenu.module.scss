@@ -1,0 +1,77 @@
+@import "../../styles/vars.scss";
+
+/* === Общий контейнер меню === */
+.sideMenu {
+  position: fixed;
+  top: 84px; /* ниже хедера */
+  left: 0;
+  height: calc(100vh - 84px);
+  width: 260px;
+  background: #fff;
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  transform: translateX(-100%);
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 14px 20px 14px;
+  opacity: 0;
+}
+
+.sideMenu.open {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* === Верхняя часть меню === */
+.menuTop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* === Пункты навигации === */
+.menuItem {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(17, 17, 17, 0.85);
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+  text-align: left;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+    color: #000;
+  }
+}
+
+.menuItem.active {
+  color: #000;
+  background: rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+}
+
+/* === Нижняя часть (логин, футер и т.п.) === */
+.menuBottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.menuBottom .menuItem {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/* overlay — выключаем */
+.overlay {
+  display: none;
+}
