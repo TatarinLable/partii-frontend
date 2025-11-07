@@ -11,7 +11,7 @@
   gap: 14px;
   margin: 0 auto;
   overflow: hidden;
-  transition: all 0.4s ease; // плавный переход высоты и отступов
+  transition: all 0.4s ease;
 }
 
 .window {
@@ -22,13 +22,13 @@
   overflow-y: auto;
   padding-right: 4px;
   scroll-behavior: smooth;
-  transition: max-height 0.4s ease, opacity 0.4s ease; // добавляем плавность
+  transition: max-height 0.4s ease, opacity 0.4s ease;
   opacity: 1;
 }
 
 .chat.collapsed .window {
   max-height: 60px;
-  opacity: 0.6; // немного "приглушаем" при закрытии
+  opacity: 0.6;
 }
 
 .chat.collapsed {
@@ -56,16 +56,30 @@
     background: #f7f7f7;
     color: #111;
   }
+
+  &.thinking {
+    align-self: flex-start;
+    background: #f2f2f2;
+    color: #aaa;
+    font-style: italic;
+    animation: blink 1.2s infinite;
+  }
+}
+
+@keyframes blink {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
 }
 
 .inputRow {
   display: flex;
   align-items: center;
-  border: 1.5px solid rgba(0,0,0,0.12);
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
   border-radius: 28px;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.03);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
 
   .plus {
     width: 56px;
@@ -125,11 +139,22 @@
     color: $muted;
   }
 
-  .hintText b { margin-right: 6px; color: #111; }
-  .hintText span { color: $muted; }
+  .hintText b {
+    margin-right: 6px;
+    color: #111;
+  }
+  .hintText span {
+    color: $muted;
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

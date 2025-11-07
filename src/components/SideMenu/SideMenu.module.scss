@@ -1,22 +1,28 @@
 @import "../../styles/vars.scss";
 
-/* === Общий контейнер меню === */
+/* === Контейнер меню === */
 .sideMenu {
   position: fixed;
-  top: 84px; /* ниже хедера */
+  top: 84px;
   left: 0;
   height: calc(100vh - 84px);
   width: 260px;
-  background: #fff;
-  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--menu-bg);
+  backdrop-filter: blur(16px);
+
   transform: translateX(-100%);
-  transition: transform 0.35s ease, opacity 0.35s ease;
-  z-index: 20;
+  transition:
+    transform 0.45s cubic-bezier(0.25, 1, 0.3, 1),
+    opacity 0.4s ease,
+    background 0.35s ease,
+    color 0.35s ease;
+  z-index: 40;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 16px 14px 20px 14px;
+  padding: 18px 16px 22px 16px;
   opacity: 0;
+  
 }
 
 .sideMenu.open {
@@ -24,46 +30,83 @@
   opacity: 1;
 }
 
-/* === Верхняя часть меню === */
+/* === Верхняя часть === */
 .menuTop {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 4px;
+  gap: 10px;
 }
 
-/* === Пункты навигации === */
+/* === Элементы меню === */
+.menuItem {
+  opacity: 0;
+  transform: translateX(-10px) scale(0.98);
+}
+
+.sideMenu.open .menuItem {
+  animation: fadeInBounce 0.5s cubic-bezier(0.25, 1.25, 0.3, 1) forwards;
+}
+
+.sideMenu.open .menuItem:nth-child(1) { animation-delay: 0.08s; }
+.sideMenu.open .menuItem:nth-child(2) { animation-delay: 0.16s; }
+.sideMenu.open .menuItem:nth-child(3) { animation-delay: 0.24s; }
+.sideMenu.open .menuItem:nth-child(4) { animation-delay: 0.32s; }
+
+.menuBottom .menuItem:nth-child(1) { animation-delay: 0.4s; }
+.menuBottom .menuItem:nth-child(2) { animation-delay: 0.48s; }
+.menuBottom .menuItem:nth-child(3) { animation-delay: 0.56s; }
+
+@keyframes fadeInBounce {
+  0% {
+    opacity: 0;
+    transform: translateX(-12px) scale(0.98);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(4px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* === Стиль пунктов === */
 .menuItem {
   font-size: 15px;
   font-weight: 500;
-  color: rgba(17, 17, 17, 0.85);
-  padding: 8px 10px;
+  color: var(--menu-text);
+  padding: 9px 12px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.25s ease, color 0.25s ease;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
   text-align: left;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.04);
-    color: #000;
+    background: var(--menu-hover-bg);
+    color: var(--menu-hover-text);
+    transform: translateX(6px);
   }
 }
 
 .menuItem.active {
-  color: #000;
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--menu-active-bg);
+  color: var(--menu-active-text);
   font-weight: 600;
 }
 
-/* === Нижняя часть (логин, футер и т.п.) === */
+/* === Нижняя часть меню === */
 .menuBottom {
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid var(--menu-border);
   padding-top: 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--menu-bottom-text);
 }
 
 .menuBottom .menuItem {
@@ -71,7 +114,36 @@
   font-size: 14px;
 }
 
-/* overlay — выключаем */
-.overlay {
-  display: none;
+/* === Blur контента при открытии меню === */
+.appWrapper {
+  position: relative;
+  transition: transform 0.45s ease, filter 0.35s ease;
+}
+
+.appWrapper.blurred {
+  filter: blur(6px) brightness(0.96);
+  pointer-events: none;
+}
+
+/* === Цветовые переменные === */
+:root {
+  --menu-bg: rgba(255, 255, 255, 0.82);
+  --menu-text: rgba(17, 17, 17, 0.85);
+  --menu-hover-bg: rgba(0, 0, 0, 0.06);
+  --menu-hover-text: #000;
+  --menu-active-bg: rgba(0, 0, 0, 0.08);
+  --menu-active-text: #000;
+  --menu-border: rgba(0, 0, 0, 0.05);
+  --menu-bottom-text: rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] {
+  --menu-bg: rgba(20, 20, 20, 0.85);
+  --menu-text: rgba(255, 255, 255, 0.85);
+  --menu-hover-bg: rgba(255, 255, 255, 0.08);
+  --menu-hover-text: #fff;
+  --menu-active-bg: rgba(255, 255, 255, 0.12);
+  --menu-active-text: #fff;
+  --menu-border: rgba(255, 255, 255, 0.1);
+  --menu-bottom-text: rgba(255, 255, 255, 0.6);
 }

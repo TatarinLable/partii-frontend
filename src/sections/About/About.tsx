@@ -1,16 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./About.module.scss";
 import portrait from "/src/assets/hero.jpg"; // твоя иллюстрация
+
+const texts = [
+  {
+    chapter: "Chapter One",
+    title: "Hi, my name is Artem",
+    desc: "I’m a digital designer who values clarity, storytelling and elegant visual systems. My focus is creating expressive experiences that connect aesthetics and usability.",
+  },
+  {
+    chapter: "Chapter Two",
+    title: "What I do",
+    desc: "I create branding, interfaces, and motion for digital products. My approach combines structure, empathy, and aesthetics to bring ideas to life.",
+  },
+  {
+    chapter: "Chapter Three",
+    title: "My goal",
+    desc: "To design thoughtful experiences that help people interact with technology more naturally — with less noise, more meaning, and emotion.",
+  },
+];
 
 const skills = [
   { name: "Adobe", icon: "/src/assets/adobe.png" },
   { name: "Illustrator", icon: "/src/assets/illustrator.png" },
   { name: "Premiere", icon: "/src/assets/premiere.png" },
   { name: "Figma", icon: "/src/assets/figma.png" },
-  { name: "Lemma", icon: "/src/assets/lemma.pns" },
+  { name: "Lemma", icon: "/src/assets/lemma.png" },
 ];
 
 const About = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const active = texts[activeIndex];
+
   return (
     <section className={styles.about} id="about">
       <div className={styles.header}>
@@ -20,23 +41,26 @@ const About = () => {
 
       <div className={styles.content}>
         <div className={styles.imageWrap}>
-          <img src={portrait} alt="portrait" className={styles.image} />
+          <img src={portrait} alt="portrait" loading="lazy" className={styles.image} />
         </div>
 
         <div className={styles.text}>
-          <p className={styles.chapter}>Chapter for my</p>
-          <h3 className={styles.name}>Hi, my name is <span>Artem</span></h3>
-          <p className={styles.description}>
-            Whether we're meeting someone, applying for a job, or simply trying
-            to introduce ourselves, we need to be able to communicate effectively.
-            The key difference lies in the information we choose to share in
-            different situations.
-          </p>
+          <p className={styles.chapter}>{active.chapter}</p>
+          <h3 className={styles.name}>
+            {active.title.split(" ").map((word, i) =>
+              word === "Artem" ? <span key={i}>{word} </span> : `${word} `
+            )}
+          </h3>
+          <p className={styles.description}>{active.desc}</p>
 
           <div className={styles.dots}>
-            <span className={`${styles.dot} ${styles.active}`}></span>
-            <span className={styles.dot}></span>
-            <span className={styles.dot}></span>
+            {texts.map((_, i) => (
+              <span
+                key={i}
+                className={`${styles.dot} ${i === activeIndex ? styles.active : ""}`}
+                onClick={() => setActiveIndex(i)}
+              ></span>
+            ))}
           </div>
         </div>
       </div>

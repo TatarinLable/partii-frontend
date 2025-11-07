@@ -1,8 +1,9 @@
 @import "../../styles/vars.scss";
+
 .menuButton {
   width: 30px;
   height: 26px;
-  border: 1.5px solid rgba(0, 0, 0, 0.8);
+  border: 1.5px solid var(--menu-text); /* <-- вместо rgba */
   border-radius: 6px;
   background: none;
   display: flex;
@@ -13,7 +14,7 @@
   padding: 0;
 
   &:hover {
-    border-color: #000;
+    border-color: var(--text); /* чуть ярче при наведении */
     transform: scale(1.05);
   }
 }
@@ -21,7 +22,7 @@
 .line {
   width: 1.5px;
   height: 60%;
-  background: rgba(0, 0, 0, 0.8);
+  background: var(--menu-text); /* <-- вместо фиксированного rgba */
   border-radius: 1px;
   transition: transform 0.45s cubic-bezier(0.25, 1.5, 0.5, 1), opacity 0.3s ease;
   transform: translateX(0);

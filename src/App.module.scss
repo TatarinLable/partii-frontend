@@ -1,10 +1,10 @@
 .appWrapper {
   position: relative;
-  transition: transform 0.4s ease;
+  transition: margin-left 0.4s ease, filter 0.3s ease;
 }
 
 .shifted {
-  transform: translateX(240px);
+  margin-left: 240px; /* мягкий сдвиг контента */
 }
 
 .blur {

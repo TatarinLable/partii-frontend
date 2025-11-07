@@ -1,4 +1,51 @@
 $muted: #8b8b8b;
 $text: #111;
 $bg: #fff;
-$accent: #111; // добавь вот эту строку
+$accent: #111;
+
+/* 🌞 Светлая тема */
+:root[data-theme="light"] {
+  --bg: #ffffff; /* чистый белый фон */
+  --text: #111111;
+  --muted: #8b8b8b;
+
+  /* Меню + Хедер */
+  --menu-bg: rgb(255, 255, 255);
+  --menu-text: rgba(17, 17, 17, 0.85);
+  --menu-hover-bg: rgba(0, 0, 0, 0.06);
+  --menu-active-bg: rgba(0, 0, 0, 0.08);
+  --header-bg: rgba(255, 255, 255, 0.7);
+  --header-border: rgba(0, 0, 0, 0.06);
+}
+
+/* 🌚 Тёмная тема */
+:root[data-theme="dark"] {
+  /* фоновый плавный градиент — до середины идёт серый */
+  --bg: linear-gradient(
+    to right,
+    #0d0d0d 45%,   /* глубокий чёрный */
+    #2b2b2b 100%   /* мягкий серый перелив справа */
+  );
+
+  --text: #ffffff;
+  --muted: #999999;
+
+  /* Меню + Хедер — полупрозрачное матовое стекло */
+  --menu-bg: rgb(0, 0, 0);
+  --menu-text: rgba(255, 255, 255, 0.9);
+  --menu-hover-bg: rgba(255, 255, 255, 0.08);
+  --menu-active-bg: rgba(255, 255, 255, 0.12);
+
+  --header-bg: rgb(13, 13, 13);
+  --header-border: rgba(255, 255, 255, 0.08);
+}
+
+/* === Общие стили === */
+body {
+  background: var(--bg);
+  color: var(--text);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: background 0.4s ease, color 0.4s ease;
+}

@@ -1,0 +1,91 @@
+@import "../../styles/vars.scss";
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  width: 320px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+
+    input {
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: #000;
+        outline: none;
+      }
+    }
+
+    button {
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.25s;
+
+      &:hover {
+        background: #111;
+      }
+    }
+  }
+
+  .switch {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #555;
+
+    span {
+      color: #000;
+      font-weight: 500;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
